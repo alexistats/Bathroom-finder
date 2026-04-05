@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Rate {{ bathroom.name }} — Brantford Bathroom Finder{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5" style="max-width: 560px;">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Map</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('bathrooms.detail', bathroom_id=bathroom.id) }}">{{ bathroom.name }}</a></li>
+      <li class="breadcrumb-item active">Rate</li>
+    </ol>
+  </nav>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title">Rate: {{ bathroom.name }}</h3>
+      <p class="text-muted small">{{ bathroom.address }}</p>
+      {% if bathroom.indoor_location %}
+        <p class="small"><strong>📍</strong> {{ bathroom.indoor_location }}</p>
+      {% endif %}
+
+      {% if existing %}
+        <div class="alert alert-info">You've already rated this bathroom. Submitting will update your rating.</div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('ratings.rate_submit', bathroom_id=bathroom.id) }}">
+
+        {% set fields = [
+          ('cleanliness', '🧹 Cleanliness', existing.cleanliness if existing else 3),
+          ('toilet_paper', '🧻 Toilet Paper', existing.toilet_paper if existing else 3),
+          ('soap', '🧼 Soap', existing.soap if existing else 3),
+        ] %}
+
+        {% for field_name, label, current_val in fields %}
+        <div class="mb-4">
+          <label class="form-label fw-semibold">{{ label }}</label>
+          <div class="star-picker d-flex gap-2" data-field="{{ field_name }}">
+            {% for i in range(1, 6) %}
+              <button type="button"
+                      class="star-btn {% if i <= current_val %}active{% endif %}"
+                      data-value="{{ i }}"
+                      onclick="setRating('{{ field_name }}', {{ i }})">
+                {{ i }}
+              </button>
+            {% endfor %}
+          </div>
+          <input type="hidden" name="{{ field_name }}" id="input-{{ field_name }}" value="{{ current_val }}">
+          <div class="star-label small text-muted mt-1" id="label-{{ field_name }}">
+            {{ ['', 'Very Poor', 'Poor', 'Acceptable', 'Good', 'Excellent'][current_val] }}
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="mb-3">
+          <label for="comment" class="form-label fw-semibold">Comment <span class="text-muted fw-normal">(optional)</span></label>
+          <textarea class="form-control" id="comment" name="comment" rows="3"
+                    maxlength="500" placeholder="Any tips for other visitors?">{{ existing.comment if existing and existing.comment else '' }}</textarea>
+          <div class="form-text">Max 500 characters.</div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Submit Rating</button>
+          <a href="{{ url_for('bathrooms.detail', bathroom_id=bathroom.id) }}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/rating.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,115 @@
+/* ─── Layout ─────────────────────────────────────────────── */
+
+/* Make Folium's generated map div fill its container */
+#folium-map,
+#folium-map > div,
+#folium-map iframe {
+  width: 100% !important;
+  height: 75vh !important;
+  min-height: 450px;
+  border: none;
+}
+
+/* ─── Detail chips ────────────────────────────────────────── */
+
+.detail-chip {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chip-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.chip-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ─── Star picker (rating form) ───────────────────────────── */
+
+.star-picker {
+  display: flex;
+  gap: 8px;
+}
+
+.star-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
+  background: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #adb5bd;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.star-btn.active {
+  background: #f5a623;
+  border-color: #f5a623;
+  color: white;
+}
+
+.star-btn:hover {
+  border-color: #f5a623;
+  color: #f5a623;
+}
+
+.star-btn.active:hover {
+  background: #e09610;
+  border-color: #e09610;
+  color: white;
+}
+
+/* ─── Nearby list panel ───────────────────────────────────── */
+
+#geo-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 230px;
+  min-width: 180px;
+}
+
+#nearby-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.nearby-item {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 7px 0;
+}
+
+.nearby-item:last-child {
+  border-bottom: none;
+}
+
+/* ─── Misc ────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid #dee2e6;
+}
+
+/* Alert indoor location block */
+.alert-primary strong.d-block {
+  margin-bottom: 4px;
+}

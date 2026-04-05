@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}About — Brantford Bathroom Finder{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5" style="max-width: 720px;">
+  <h2>About Brantford Bathroom Finder</h2>
+  <p class="lead">A community-powered map of public washrooms in Brantford, Ontario — with exact indoor locations so you're never wandering a building when nature calls.</p>
+
+  <h5 class="mt-4">How it works</h5>
+  <ul>
+    <li>Our map shows verified public washrooms across Brantford.</li>
+    <li>Each listing includes <strong>where the bathroom is located inside the building</strong> — not just an address.</li>
+    <li>Community members can rate bathrooms on <strong>cleanliness, toilet paper, and soap</strong>.</li>
+    <li>Anyone can <a href="{{ url_for('main.suggest_get') }}">suggest a missing bathroom</a> for review.</li>
+  </ul>
+
+  <h5 class="mt-4">Data Sources</h5>
+  <p>Data is sourced from OpenStreetMap contributors and local community members. Indoor location data is curated manually.</p>
+
+  <h5 class="mt-4">Privacy</h5>
+  <p>No account or personal information is required. Ratings are associated with an anonymous browser session only.</p>
+
+  <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-2">← Back to Map</a>
+</div>
+{% endblock %}
